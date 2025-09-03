@@ -65,6 +65,7 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            cursor: pointer;
         }
         
         .nav {
@@ -120,16 +121,17 @@
             align-items: center;
         }
         
-        .gig-card, .setlist-card, .payment-card, .contact-card {
+        .gig-card, .setlist-card, .payment-card, .contact-card, .contract-card {
             background: #f8f9fa;
             border-radius: 10px;
             padding: 15px;
             margin-bottom: 15px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
             transition: transform 0.2s;
+            cursor: pointer;
         }
         
-        .gig-card:hover, .setlist-card:hover, .payment-card:hover, .contact-card:hover {
+        .gig-card:hover, .setlist-card:hover, .payment-card:hover, .contact-card:hover, .contract-card:hover {
             transform: translateY(-2px);
         }
         
@@ -224,14 +226,14 @@
             color: #7f8c8d;
         }
         
-        .payment-status {
+        .payment-status, .contract-status {
             padding: 5px 10px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
         }
         
-        .paid {
+        .paid, .signed {
             background: #e8f5e9;
             color: #2e7d32;
         }
@@ -239,6 +241,11 @@
         .pending {
             background: #ffecb3;
             color: #f57c00;
+        }
+        
+        .expired {
+            background: #ffcdd2;
+            color: #c62828;
         }
         
         .upcoming-gig {
@@ -470,6 +477,134 @@
             background: #4ca1af;
             color: white;
         }
+        
+        .calendar {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .calendar th, .calendar td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .calendar th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        .calendar td {
+            height: 40px;
+            cursor: pointer;
+        }
+        
+        .calendar td:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .calendar .today {
+            background-color: #4ca1af;
+            color: white;
+            border-radius: 50%;
+        }
+        
+        .calendar .has-gig {
+            background-color: #e8f5e9;
+            position: relative;
+        }
+        
+        .calendar .has-gig::after {
+            content: "";
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background-color: #4caf50;
+            border-radius: 50%;
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #4ca1af;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            margin: 0 auto 15px;
+        }
+        
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .profile-role {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        
+        .profile-stat {
+            text-align: center;
+        }
+        
+        .profile-stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .profile-stat-label {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        
+        .profile-section {
+            margin-bottom: 20px;
+        }
+        
+        .profile-section-title {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        
+        .profile-info {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .profile-info-label {
+            width: 100px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .profile-info-value {
+            flex: 1;
+            color: #7f8c8d;
+        }
     </style>
 </head>
 <body>
@@ -477,7 +612,7 @@
         <div class="header">
             <div class="logo">GreenRoom</div>
             <div class="tagline">Your All-in-One Music Management App</div>
-            <div class="user-avatar">JD</div>
+            <div class="user-avatar" onclick="showPage('profile')">JD</div>
         </div>
         
         <div class="nav">
@@ -620,6 +755,111 @@
             <button class="button" style="background: #2c3e50;" onclick="showFinancialReports()"><i class="fas fa-chart-line"></i> View Financial Reports</button>
         </div>
         
+        <!-- Calendar Page -->
+        <div id="calendar" class="page">
+            <h2 class="page-title">Gig Calendar <button class="button" style="width: auto; padding: 8px 15px; margin: 0;" onclick="showAddGigModal()"><i class="fas fa-plus"></i> Add</button></h2>
+            
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="changeCalendarView('month')">Month</button>
+                <button class="filter-btn" onclick="changeCalendarView('week')">Week</button>
+                <button class="filter-btn" onclick="changeCalendarView('day')">Day</button>
+            </div>
+            
+            <div id="calendarView">
+                <!-- Calendar will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Contracts Page -->
+        <div id="contracts" class="page">
+            <h2 class="page-title">Contract Manager <button class="button" style="width: auto; padding: 8px 15px; margin: 0;" onclick="showAddContractModal()"><i class="fas fa-plus"></i> Add</button></h2>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search contracts..." id="contractSearch">
+                <button onclick="searchContracts()"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterContracts('all')">All</button>
+                <button class="filter-btn" onclick="filterContracts('signed')">Signed</button>
+                <button class="filter-btn" onclick="filterContracts('pending')">Pending</button>
+                <button class="filter-btn" onclick="filterContracts('expired')">Expired</button>
+            </div>
+            
+            <div id="contractsList">
+                <!-- Contract items will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Profile Page -->
+        <div id="profile" class="page">
+            <div class="profile-header">
+                <div class="profile-avatar">JD</div>
+                <div class="profile-name">John Doe</div>
+                <div class="profile-role">Professional Musician</div>
+                
+                <div class="profile-stats">
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">45</div>
+                        <div class="profile-stat-label">Gigs</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">$18.5K</div>
+                        <div class="profile-stat-label">Earnings</div>
+                    </div>
+                    <div class="profile-stat">
+                        <div class="profile-stat-value">92%</div>
+                        <div class="profile-stat-label">Rating</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-section">
+                <div class="profile-section-title">Personal Information</div>
+                
+                <div class="profile-info">
+                    <div class="profile-info-label">Email:</div>
+                    <div class="profile-info-value">john.doe@example.com</div>
+                </div>
+                
+                <div class="profile-info">
+                    <div class="profile-info-label">Phone:</div>
+                    <div class="profile-info-value">+1 (555) 123-4567</div>
+                </div>
+                
+                <div class="profile-info">
+                    <div class="profile-info-label">Location:</div>
+                    <div class="profile-info-value">New York, NY</div>
+                </div>
+                
+                <div class="profile-info">
+                    <div class="profile-info-label">Instruments:</div>
+                    <div class="profile-info-value">Guitar, Piano, Vocals</div>
+                </div>
+            </div>
+            
+            <div class="profile-section">
+                <div class="profile-section-title">Social Media</div>
+                
+                <div class="profile-info">
+                    <div class="profile-info-label">Instagram:</div>
+                    <div class="profile-info-value">@johndoemusic</div>
+                </div>
+                
+                <div class="profile-info">
+                    <div class="profile-info-label">YouTube:</div>
+                    <div class="profile-info-value">John Doe Music</div>
+                </div>
+                
+                <div class="profile-info">
+                    <div class="profile-info-label">Spotify:</div>
+                    <div class="profile-info-value">John Doe Artist</div>
+                </div>
+            </div>
+            
+            <button class="button" onclick="showEditProfileModal()">Edit Profile</button>
+        </div>
+        
         <div class="tab-bar">
             <div class="tab active" onclick="showPage('dashboard')">
                 <i class="fas fa-home"></i>
@@ -632,11 +872,11 @@
             <div class="tab" onclick="showAddGigModal()">
                 <i class="fas fa-plus-circle" style="color: #4ca1af; font-size: 28px;"></i>
             </div>
-            <div class="tab" onclick="showContractsPage()">
+            <div class="tab" onclick="showPage('contracts')">
                 <i class="fas fa-file-contract"></i>
                 <span>Contracts</span>
             </div>
-            <div class="tab" onclick="showProfilePage()">
+            <div class="tab" onclick="showPage('profile')">
                 <i class="fas fa-user"></i>
                 <span>Profile</span>
             </div>
@@ -699,6 +939,40 @@
             <div class="form-actions">
                 <button class="btn btn-secondary" onclick="closeModal('setlistModal')">Cancel</button>
                 <button class="btn btn-primary" onclick="saveSetlist()">Save Setlist</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="contractModal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="contractModalTitle">Add New Contract</h2>
+            <div class="form-group">
+                <label for="contractName">Contract Name</label>
+                <input type="text" id="contractName" placeholder="e.g., Summer Festival Contract">
+            </div>
+            <div class="form-group">
+                <label for="contractClient">Client</label>
+                <input type="text" id="contractClient" placeholder="e.g., Festival Organizers Inc.">
+            </div>
+            <div class="form-group">
+                <label for="contractDate">Date</label>
+                <input type="date" id="contractDate">
+            </div>
+            <div class="form-group">
+                <label for="contractAmount">Amount ($)</label>
+                <input type="number" id="contractAmount" placeholder="e.g., 1500">
+            </div>
+            <div class="form-group">
+                <label for="contractStatus">Status</label>
+                <select id="contractStatus">
+                    <option value="pending">Pending</option>
+                    <option value="signed">Signed</option>
+                    <option value="expired">Expired</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="closeModal('contractModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveContract()">Save Contract</button>
             </div>
         </div>
     </div>
@@ -800,10 +1074,51 @@
             }
         ];
 
+        const contracts = [
+            {
+                id: 1,
+                name: "Summer Festival Contract",
+                client: "Music Festivals Inc.",
+                date: "2023-05-15",
+                amount: 1200,
+                status: "signed",
+                expiry: "2023-12-31"
+            },
+            {
+                id: 2,
+                name: "Wedding Performance Agreement",
+                client: "Johnson Family",
+                date: "2023-04-20",
+                amount: 900,
+                status: "signed",
+                expiry: "2023-06-30"
+            },
+            {
+                id: 3,
+                name: "Club Residency Contract",
+                client: "Blue Note Jazz Club",
+                date: "2023-06-01",
+                amount: 2000,
+                status: "pending",
+                expiry: "2023-08-31"
+            },
+            {
+                id: 4,
+                name: "Recording Session Agreement",
+                client: "Studio 42",
+                date: "2023-03-10",
+                amount: 650,
+                status: "expired",
+                expiry: "2023-05-31"
+            }
+        ];
+
         // DOM elements
         const gigsList = document.getElementById('gigsList');
         const setlistsList = document.getElementById('setlistsList');
         const paymentsList = document.getElementById('paymentsList');
+        const contractsList = document.getElementById('contractsList');
+        const calendarView = document.getElementById('calendarView');
         const setlistGigSelect = document.getElementById('setlistGig');
 
         // Initialize the app
@@ -811,6 +1126,8 @@
             renderGigs();
             renderSetlists();
             renderPayments();
+            renderContracts();
+            renderCalendar();
             populateGigDropdown();
         }
 
@@ -829,7 +1146,10 @@
                 item.classList.remove('active');
             });
             
-            event.currentTarget.classList.add('active');
+            // Update active tab
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
         }
 
         // Render gigs list
@@ -920,6 +1240,103 @@
             });
         }
 
+        // Render contracts list
+        function renderContracts(filter = 'all') {
+            contractsList.innerHTML = '';
+            
+            let filteredContracts = contracts;
+            
+            if (filter === 'signed') {
+                filteredContracts = contracts.filter(contract => contract.status === 'signed');
+            } else if (filter === 'pending') {
+                filteredContracts = contracts.filter(contract => contract.status === 'pending');
+            } else if (filter === 'expired') {
+                filteredContracts = contracts.filter(contract => contract.status === 'expired');
+            }
+            
+            filteredContracts.forEach(contract => {
+                const contractDate = new Date(contract.date);
+                const contractElement = document.createElement('div');
+                contractElement.className = 'contract-card';
+                contractElement.onclick = () => showContractDetails(contract.id);
+                
+                contractElement.innerHTML = `
+                    <div class="gig-title">${contract.name}</div>
+                    <div class="gig-details">
+                        <div><i class="fas fa-building"></i> ${contract.client}</div>
+                        <div><i class="fas fa-calendar"></i> ${formatDate(contractDate)}</div>
+                        <div><i class="fas fa-dollar-sign"></i> Amount: $${contract.amount}</div>
+                    </div>
+                    <div class="contract-status ${contract.status}">${contract.status.charAt(0).toUpperCase() + contract.status.slice(1)}</div>
+                `;
+                
+                contractsList.appendChild(contractElement);
+            });
+        }
+
+        // Render calendar
+        function renderCalendar() {
+            calendarView.innerHTML = '';
+            
+            // Create a simple calendar for the current month
+            const today = new Date();
+            const month = today.getMonth();
+            const year = today.getFullYear();
+            
+            // Get first day of month
+            const firstDay = new Date(year, month, 1);
+            // Get last day of month
+            const lastDay = new Date(year, month + 1, 0);
+            
+            // Create calendar header
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                                "July", "August", "September", "October", "November", "December"];
+            
+            const calendarHTML = `
+                <h3 style="text-align: center; margin-bottom: 15px; color: #2c3e50;">${monthNames[month]} ${year}</h3>
+                <table class="calendar">
+                    <tr>
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>
+            `;
+            
+            // Create calendar body
+            let date = 1;
+            let calendarBody = '';
+            
+            for (let i = 0; i < 6; i++) {
+                let row = '<tr>';
+                
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDay.getDay()) {
+                        row += '<td></td>';
+                    } else if (date > lastDay.getDate()) {
+                        break;
+                    } else {
+                        const isToday = date === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+                        const hasGig = gigs.some(gig => {
+                            const gigDate = new Date(gig.date);
+                            return gigDate.getDate() === date && gigDate.getMonth() === month && gigDate.getFullYear() === year;
+                        });
+                        
+                        row += `<td class="${isToday ? 'today' : ''} ${hasGig ? 'has-gig' : ''}" onclick="showDayDetails(${date}, ${month}, ${year})">${date}</td>`;
+                        date++;
+                    }
+                }
+                
+                row += '</tr>';
+                calendarBody += row;
+            }
+            
+            calendarView.innerHTML = calendarHTML + calendarBody + '</table>';
+        }
+
         // Populate gig dropdown for setlist association
         function populateGigDropdown() {
             setlistGigSelect.innerHTML = '<option value="">Select a gig</option>';
@@ -945,7 +1362,6 @@
             document.getElementById('gigPayment').value = gig.payment;
             document.getElementById('gigNotes').value = gig.notes;
             
-            // For demo, we'll just show the modal
             showModal('gigModal');
         }
 
@@ -959,8 +1375,53 @@
             document.getElementById('setlistDuration').value = setlist.duration;
             document.getElementById('setlistGig').value = setlist.gigId || '';
             
-            // For demo, we'll just show the modal
             showModal('setlistModal');
+        }
+
+        // Show contract details
+        function showContractDetails(contractId) {
+            const contract = contracts.find(c => c.id === contractId);
+            if (!contract) return;
+            
+            document.getElementById('contractModalTitle').textContent = contract.name;
+            document.getElementById('contractName').value = contract.name;
+            document.getElementById('contractClient').value = contract.client;
+            document.getElementById('contractDate').value = contract.date;
+            document.getElementById('contractAmount').value = contract.amount;
+            document.getElementById('contractStatus').value = contract.status;
+            
+            showModal('contractModal');
+        }
+
+        // Show day details in calendar
+        function showDayDetails(day, month, year) {
+            const dayGigs = gigs.filter(gig => {
+                const gigDate = new Date(gig.date);
+                return gigDate.getDate() === day && gigDate.getMonth() === month && gigDate.getFullYear() === year;
+            });
+            
+            if (dayGigs.length > 0) {
+                let gigsHTML = '';
+                dayGigs.forEach(gig => {
+                    gigsHTML += `
+                        <div class="gig-card">
+                            <div class="gig-title">${gig.name}</div>
+                            <div class="gig-details">
+                                <div><i class="fas fa-clock"></i> ${new Date(gig.date).toLocaleTimeString()}</div>
+                                <div><i class="fas fa-map-marker-alt"></i> ${gig.location}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                calendarView.innerHTML = `
+                    <h3 style="text-align: center; margin-bottom: 15px; color: #2c3e50;">Gigs on ${day}/${month+1}/${year}</h3>
+                    ${gigsHTML}
+                    <button class="button" onclick="renderCalendar()">Back to Calendar</button>
+                `;
+            } else {
+                showNotification(`No gigs scheduled for ${day}/${month+1}/${year}`);
+            }
         }
 
         // Show modal
@@ -993,18 +1454,33 @@
             showModal('setlistModal');
         }
 
+        // Show add contract modal
+        function showAddContractModal() {
+            document.getElementById('contractModalTitle').textContent = 'Add New Contract';
+            document.getElementById('contractName').value = '';
+            document.getElementById('contractClient').value = '';
+            document.getElementById('contractDate').value = '';
+            document.getElementById('contractAmount').value = '';
+            document.getElementById('contractStatus').value = 'pending';
+            showModal('contractModal');
+        }
+
         // Save gig
         function saveGig() {
-            // In a real app, this would save to a database
             showNotification('Gig saved successfully!');
             closeModal('gigModal');
         }
 
         // Save setlist
         function saveSetlist() {
-            // In a real app, this would save to a database
             showNotification('Setlist saved successfully!');
             closeModal('setlistModal');
+        }
+
+        // Save contract
+        function saveContract() {
+            showNotification('Contract saved successfully!');
+            closeModal('contractModal');
         }
 
         // Show notification
@@ -1045,6 +1521,34 @@
             renderPayments(filter);
         }
 
+        // Filter contracts
+        function filterContracts(filter) {
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderContracts(filter);
+        }
+
+        // Change calendar view
+        function changeCalendarView(view) {
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // For demo purposes, we'll just show a notification
+            showNotification(`Switched to ${view} view`);
+            
+            // In a real app, this would change the calendar view
+            if (view === 'month') {
+                renderCalendar();
+            }
+        }
+
         // Search gigs
         function searchGigs() {
             const searchTerm = document.getElementById('gigSearch').value.toLowerCase();
@@ -1055,6 +1559,13 @@
         // Search setlists
         function searchSetlists() {
             const searchTerm = document.getElementById('setlistSearch').value.toLowerCase();
+            // For demo purposes, we'll just show a notification
+            showNotification(`Searching for: ${searchTerm}`);
+        }
+
+        // Search contracts
+        function searchContracts() {
+            const searchTerm = document.getElementById('contractSearch').value.toLowerCase();
             // For demo purposes, we'll just show a notification
             showNotification(`Searching for: ${searchTerm}`);
         }
@@ -1078,19 +1589,14 @@
             showNotification('Financial reports feature would open here');
         }
 
+        // Show edit profile modal
+        function showEditProfileModal() {
+            showNotification('Edit profile feature would open here');
+        }
+
         // Show quick add menu
         function showQuickAddMenu() {
             showNotification('Quick add menu would appear here');
-        }
-
-        // Show contracts page (placeholder)
-        function showContractsPage() {
-            showNotification('Contracts page would open here');
-        }
-
-        // Show profile page (placeholder)
-        function showProfilePage() {
-            showNotification('Profile page would open here');
         }
 
         // Initialize the app when the page loads
