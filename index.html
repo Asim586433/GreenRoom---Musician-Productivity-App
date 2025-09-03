@@ -18,16 +18,19 @@
             color: #333;
             min-height: 100vh;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .container {
             max-width: 400px;
-            margin: 0 auto;
+            width: 100%;
             background: white;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            min-height: 85vh;
+            height: 85vh;
             position: relative;
         }
         
@@ -48,6 +51,20 @@
         .tagline {
             font-size: 14px;
             opacity: 0.8;
+        }
+        
+        .user-avatar {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fdbb2d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
         
         .nav {
@@ -98,20 +115,29 @@
             color: #2c3e50;
             border-bottom: 2px solid #4ca1af;
             padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .gig-card, .setlist-card, .payment-card {
+        .gig-card, .setlist-card, .payment-card, .contact-card {
             background: #f8f9fa;
             border-radius: 10px;
             padding: 15px;
             margin-bottom: 15px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s;
+        }
+        
+        .gig-card:hover, .setlist-card:hover, .payment-card:hover, .contact-card:hover {
+            transform: translateY(-2px);
         }
         
         .gig-title {
             font-weight: bold;
             color: #2c3e50;
             font-size: 18px;
+            margin-bottom: 5px;
         }
         
         .gig-details {
@@ -120,9 +146,16 @@
             color: #7f8c8d;
         }
         
+        .gig-details div {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
         .gig-details i {
             width: 20px;
             color: #4ca1af;
+            margin-right: 8px;
         }
         
         .button {
@@ -157,6 +190,7 @@
             text-align: center;
             flex: 1;
             margin: 0 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         .stat-value {
@@ -214,6 +248,7 @@
             padding: 20px;
             margin: 20px 0;
             text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
         
         .upcoming-title {
@@ -237,6 +272,7 @@
             border: none;
             font-weight: bold;
             cursor: pointer;
+            transition: all 0.3s;
         }
         
         .primary {
@@ -244,10 +280,18 @@
             color: #2c3e50;
         }
         
+        .primary:hover {
+            background: #f0f0f0;
+        }
+        
         .secondary {
             background: transparent;
             border: 1px solid white;
             color: white;
+        }
+        
+        .secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
         
         .search-bar {
@@ -287,6 +331,7 @@
             text-align: center;
             color: #7f8c8d;
             font-size: 12px;
+            cursor: pointer;
         }
         
         .tab.active {
@@ -298,6 +343,133 @@
             display: block;
             margin-bottom: 5px;
         }
+        
+        .add-btn {
+            background: #4ca1af;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            bottom: 70px;
+            right: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 100;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            border-bottom: 2px solid #4ca1af;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .btn-primary {
+            background: #4ca1af;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #ddd;
+            color: #333;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+        
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .filter-btn.active {
+            background: #4ca1af;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -305,6 +477,7 @@
         <div class="header">
             <div class="logo">GreenRoom</div>
             <div class="tagline">Your All-in-One Music Management App</div>
+            <div class="user-avatar">JD</div>
         </div>
         
         <div class="nav">
@@ -338,7 +511,7 @@
                     <div>Central Park Main Stage</div>
                 </div>
                 <div class="action-buttons">
-                    <button class="action-btn primary">Setlist</button>
+                    <button class="action-btn primary" onclick="showSetlistModal()">Setlist</button>
                     <button class="action-btn secondary">Directions</button>
                 </div>
             </div>
@@ -360,7 +533,7 @@
             
             <h3>Recent Activity</h3>
             
-            <div class="gig-card">
+            <div class="gig-card" onclick="showGigDetails(0)">
                 <div class="gig-title">Jazz Night @ Blue Note</div>
                 <div class="gig-details">
                     <div><i class="fas fa-calendar"></i> Yesterday, 7:00 PM</div>
@@ -369,7 +542,7 @@
                 </div>
             </div>
             
-            <div class="gig-card">
+            <div class="gig-card" onclick="showGigDetails(1)">
                 <div class="gig-title">Recording Session</div>
                 <div class="gig-details">
                     <div><i class="fas fa-calendar"></i> June 15, 10:00 AM</div>
@@ -378,112 +551,42 @@
                 </div>
             </div>
             
-            <button class="button">Add New Gig</button>
+            <button class="button" onclick="showAddGigModal()">Add New Gig</button>
         </div>
         
         <!-- Gigs Page -->
         <div id="gigs" class="page">
-            <h2 class="page-title">Gig Management</h2>
+            <h2 class="page-title">Gig Management <button class="button" style="width: auto; padding: 8px 15px; margin: 0;" onclick="showAddGigModal()"><i class="fas fa-plus"></i> Add</button></h2>
             
             <div class="search-bar">
-                <input type="text" placeholder="Search gigs...">
-                <button><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="Search gigs..." id="gigSearch">
+                <button onclick="searchGigs()"><i class="fas fa-search"></i></button>
             </div>
             
-            <div class="gig-card">
-                <div class="gig-title">Summer Music Festival</div>
-                <div class="gig-details">
-                    <div><i class="fas fa-calendar"></i> Tomorrow, 8:00 PM</div>
-                    <div><i class="fas fa-map-marker-alt"></i> Central Park Main Stage</div>
-                    <div><i class="fas fa-dollar-sign"></i> Estimated: $1,200</div>
-                </div>
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterGigs('all')">All</button>
+                <button class="filter-btn" onclick="filterGigs('upcoming')">Upcoming</button>
+                <button class="filter-btn" onclick="filterGigs('past')">Past</button>
+                <button class="filter-btn" onclick="filterGigs('today')">Today</button>
             </div>
             
-            <div class="gig-card">
-                <div class="gig-title">Wedding Performance - Johnson</div>
-                <div class="gig-details">
-                    <div><i class="fas fa-calendar"></i> June 25, 5:30 PM</div>
-                    <div><i class="fas fa-map-marker-alt"></i> Grand Hotel Ballroom</div>
-                    <div><i class="fas fa-dollar-sign"></i> Contracted: $900</div>
-                </div>
+            <div id="gigsList">
+                <!-- Gig items will be populated by JavaScript -->
             </div>
-            
-            <div class="gig-card">
-                <div class="gig-title">Club Resonance Weekly</div>
-                <div class="gig-details">
-                    <div><i class="fas fa-calendar"></i> Every Friday, 9:00 PM</div>
-                    <div><i class="fas fa-map-marker-alt"></i> Club Resonance</div>
-                    <div><i class="fas fa-dollar-sign"></i> Weekly: $500</div>
-                </div>
-            </div>
-            
-            <div class="gig-card">
-                <div class="gig-title">Corporate Event - TechSolutions Inc.</div>
-                <div class="gig-details">
-                    <div><i class="fas fa-calendar"></i> July 12, 7:00 PM</div>
-                    <div><i class="fas fa-map-marker-alt"></i> Convention Center</div>
-                    <div><i class="fas fa-dollar-sign"></i> Contracted: $1,500</div>
-                </div>
-            </div>
-            
-            <button class="button"><i class="fas fa-plus"></i> Add New Gig</button>
         </div>
         
         <!-- Setlists Page -->
         <div id="setlists" class="page">
-            <h2 class="page-title">Setlist Manager</h2>
+            <h2 class="page-title">Setlist Manager <button class="button" style="width: auto; padding: 8px 15px; margin: 0;" onclick="showAddSetlistModal()"><i class="fas fa-plus"></i> Add</button></h2>
             
-            <div class="setlist-card">
-                <div class="gig-title">Summer Music Festival Setlist</div>
-                <div class="gig-details">
-                    <div><i class="fas fa-clock"></i> Total Duration: 90 min</div>
-                    <div><i class="fas fa-music"></i> 12 Songs</div>
-                </div>
-                
-                <div class="song-item">
-                    <div class="song-info">
-                        <div class="song-title">Sweet Child O' Mine</div>
-                        <div class="song-details">Guns N' Roses • Key: D • Tempo: 125</div>
-                    </div>
-                    <div><i class="fas fa-bars"></i></div>
-                </div>
-                
-                <div class="song-item">
-                    <div class="song-info">
-                        <div class="song-title">Uptown Funk</div>
-                        <div class="song-details">Mark Ronson • Key: Dm • Tempo: 115</div>
-                    </div>
-                    <div><i class="fas fa-bars"></i></div>
-                </div>
-                
-                <div class="song-item">
-                    <div class="song-info">
-                        <div class="song-title">Billie Jean</div>
-                        <div class="song-details">Michael Jackson • Key: F#m • Tempo: 117</div>
-                    </div>
-                    <div><i class="fas fa-bars"></i></div>
-                </div>
-                
-                <button class="action-btn primary" style="width: 100%; margin-top: 10px;">Add Song</button>
+            <div class="search-bar">
+                <input type="text" placeholder="Search setlists..." id="setlistSearch">
+                <button onclick="searchSetlists()"><i class="fas fa-search"></i></button>
             </div>
             
-            <div class="setlist-card">
-                <div class="gig-title">Jazz Night Setlist</div>
-                <div class="gig-details">
-                    <div><i class="fas fa-clock"></i> Total Duration: 120 min</div>
-                    <div><i class="fas fa-music"></i> 8 Songs</div>
-                </div>
+            <div id="setlistsList">
+                <!-- Setlist items will be populated by JavaScript -->
             </div>
-            
-            <div class="setlist-card">
-                <div class="gig-title">Wedding Reception Setlist</div>
-                <div class="gig-details">
-                    <div><i class="fas fa-clock"></i> Total Duration: 180 min</div>
-                    <div><i class="fas fa-music"></i> 25 Songs</div>
-                </div>
-            </div>
-            
-            <button class="button"><i class="fas fa-plus"></i> Create New Setlist</button>
         </div>
         
         <!-- Payments Page -->
@@ -501,63 +604,217 @@
                 </div>
             </div>
             
+            <div class="filter-bar">
+                <button class="filter-btn active" onclick="filterPayments('all')">All</button>
+                <button class="filter-btn" onclick="filterPayments('paid')">Paid</button>
+                <button class="filter-btn" onclick="filterPayments('pending')">Pending</button>
+            </div>
+            
             <h3>Recent Payments</h3>
             
-            <div class="payment-card">
-                <div class="gig-title">Jazz Night @ Blue Note</div>
-                <div class="gig-details">
-                    <div><i class="fas fa-calendar"></i> June 20, 2023</div>
-                    <div><i class="fas fa-dollar-sign"></i> Amount: $400</div>
-                </div>
-                <div class="payment-status paid">Paid</div>
+            <div id="paymentsList">
+                <!-- Payment items will be populated by JavaScript -->
             </div>
             
-            <div class="payment-card">
-                <div class="gig-title">Recording Session</div>
-                <div class="gig-details">
-                    <div><i class="fas fa-calendar"></i> June 15, 2023</div>
-                    <div><i class="fas fa-dollar-sign"></i> Amount: $650</div>
-                </div>
-                <div class="payment-status paid">Paid</div>
-            </div>
-            
-            <div class="payment-card">
-                <div class="gig-title">Private Party - Anderson</div>
-                <div class="gig-details">
-                    <div><i class="fas fa-calendar"></i> June 10, 2023</div>
-                    <div><i class="fas fa-dollar-sign"></i> Amount: $800</div>
-                </div>
-                <div class="payment-status pending">Pending</div>
-            </div>
-            
-            <button class="button"><i class="fas fa-file-invoice-dollar"></i> Generate Invoice</button>
-            <button class="button" style="background: #2c3e50;"><i class="fas fa-chart-line"></i> View Financial Reports</button>
+            <button class="button" onclick="showGenerateInvoiceModal()"><i class="fas fa-file-invoice-dollar"></i> Generate Invoice</button>
+            <button class="button" style="background: #2c3e50;" onclick="showFinancialReports()"><i class="fas fa-chart-line"></i> View Financial Reports</button>
         </div>
         
         <div class="tab-bar">
-            <div class="tab active">
+            <div class="tab active" onclick="showPage('dashboard')">
                 <i class="fas fa-home"></i>
                 <span>Home</span>
             </div>
-            <div class="tab">
+            <div class="tab" onclick="showPage('calendar')">
                 <i class="fas fa-calendar"></i>
                 <span>Calendar</span>
             </div>
-            <div class="tab">
+            <div class="tab" onclick="showAddGigModal()">
                 <i class="fas fa-plus-circle" style="color: #4ca1af; font-size: 28px;"></i>
             </div>
-            <div class="tab">
-                <i class="fas fa-file-invoice"></i>
+            <div class="tab" onclick="showContractsPage()">
+                <i class="fas fa-file-contract"></i>
                 <span>Contracts</span>
             </div>
-            <div class="tab">
+            <div class="tab" onclick="showProfilePage()">
                 <i class="fas fa-user"></i>
                 <span>Profile</span>
             </div>
         </div>
+        
+        <div class="add-btn" onclick="showQuickAddMenu()">
+            <i class="fas fa-plus"></i>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="gigModal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="gigModalTitle">Add New Gig</h2>
+            <div class="form-group">
+                <label for="gigName">Gig Name</label>
+                <input type="text" id="gigName" placeholder="e.g., Summer Festival">
+            </div>
+            <div class="form-group">
+                <label for="gigDate">Date & Time</label>
+                <input type="datetime-local" id="gigDate">
+            </div>
+            <div class="form-group">
+                <label for="gigLocation">Location</label>
+                <input type="text" id="gigLocation" placeholder="e.g., Central Park">
+            </div>
+            <div class="form-group">
+                <label for="gigPayment">Payment Amount ($)</label>
+                <input type="number" id="gigPayment" placeholder="e.g., 500">
+            </div>
+            <div class="form-group">
+                <label for="gigNotes">Notes</label>
+                <textarea id="gigNotes" rows="3" placeholder="Special instructions, equipment needed..."></textarea>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="closeModal('gigModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveGig()">Save Gig</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="setlistModal">
+        <div class="modal-content">
+            <h2 class="modal-title" id="setlistModalTitle">Create Setlist</h2>
+            <div class="form-group">
+                <label for="setlistName">Setlist Name</label>
+                <input type="text" id="setlistName" placeholder="e.g., Summer Festival Set">
+            </div>
+            <div class="form-group">
+                <label for="setlistDuration">Duration (minutes)</label>
+                <input type="number" id="setlistDuration" placeholder="e.g., 90">
+            </div>
+            <div class="form-group">
+                <label for="setlistGig">Associated Gig (optional)</label>
+                <select id="setlistGig">
+                    <option value="">Select a gig</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="closeModal('setlistModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSetlist()">Save Setlist</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        Operation completed successfully!
     </div>
 
     <script>
+        // Dummy data
+        const gigs = [
+            {
+                id: 1,
+                name: "Summer Music Festival",
+                date: "2023-06-22T20:00",
+                location: "Central Park Main Stage",
+                payment: 1200,
+                status: "upcoming",
+                notes: "Main stage, 90 minute set, backline provided"
+            },
+            {
+                id: 2,
+                name: "Wedding Performance - Johnson",
+                date: "2023-06-25T17:30",
+                location: "Grand Hotel Ballroom",
+                payment: 900,
+                status: "upcoming",
+                notes: "Classical repertoire, cocktail hour then reception"
+            },
+            {
+                id: 3,
+                name: "Jazz Night @ Blue Note",
+                date: "2023-06-20T19:00",
+                location: "Blue Note Jazz Club",
+                payment: 400,
+                status: "completed",
+                notes: "Two sets, first set mostly standards"
+            },
+            {
+                id: 4,
+                name: "Recording Session",
+                date: "2023-06-15T10:00",
+                location: "Studio 42",
+                payment: 650,
+                status: "completed",
+                notes: "Lay down guitar tracks for new album"
+            }
+        ];
+
+        const setlists = [
+            {
+                id: 1,
+                name: "Summer Music Festival Setlist",
+                duration: 90,
+                gigId: 1,
+                songs: [
+                    { title: "Sweet Child O' Mine", artist: "Guns N' Roses", key: "D", tempo: 125 },
+                    { title: "Uptown Funk", artist: "Mark Ronson", key: "Dm", tempo: 115 },
+                    { title: "Billie Jean", artist: "Michael Jackson", key: "F#m", tempo: 117 }
+                ]
+            },
+            {
+                id: 2,
+                name: "Jazz Night Setlist",
+                duration: 120,
+                gigId: 3,
+                songs: [
+                    { title: "Autumn Leaves", artist: "Standard", key: "Em", tempo: 120 },
+                    { title: "So What", artist: "Miles Davis", key: "Dm", tempo: 150 },
+                    { title: "Take Five", artist: "Dave Brubeck", key: "Ebm", tempo: 174 }
+                ]
+            }
+        ];
+
+        const payments = [
+            {
+                id: 1,
+                gigId: 3,
+                amount: 400,
+                date: "2023-06-20",
+                status: "paid",
+                method: "Cash"
+            },
+            {
+                id: 2,
+                gigId: 4,
+                amount: 650,
+                date: "2023-06-15",
+                status: "paid",
+                method: "Bank Transfer"
+            },
+            {
+                id: 3,
+                gigId: 1,
+                amount: 600,
+                date: "2023-06-22",
+                status: "pending",
+                method: "Check"
+            }
+        ];
+
+        // DOM elements
+        const gigsList = document.getElementById('gigsList');
+        const setlistsList = document.getElementById('setlistsList');
+        const paymentsList = document.getElementById('paymentsList');
+        const setlistGigSelect = document.getElementById('setlistGig');
+
+        // Initialize the app
+        function initApp() {
+            renderGigs();
+            renderSetlists();
+            renderPayments();
+            populateGigDropdown();
+        }
+
+        // Show a specific page
         function showPage(pageId) {
             // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
@@ -574,6 +831,270 @@
             
             event.currentTarget.classList.add('active');
         }
+
+        // Render gigs list
+        function renderGigs(filter = 'all') {
+            gigsList.innerHTML = '';
+            
+            let filteredGigs = gigs;
+            
+            if (filter === 'upcoming') {
+                filteredGigs = gigs.filter(gig => gig.status === 'upcoming');
+            } else if (filter === 'past') {
+                filteredGigs = gigs.filter(gig => gig.status === 'completed');
+            } else if (filter === 'today') {
+                // For demo purposes, we'll show upcoming gigs as today's gigs
+                filteredGigs = gigs.filter(gig => gig.status === 'upcoming');
+            }
+            
+            filteredGigs.forEach(gig => {
+                const gigDate = new Date(gig.date);
+                const gigElement = document.createElement('div');
+                gigElement.className = 'gig-card';
+                gigElement.onclick = () => showGigDetails(gig.id);
+                
+                gigElement.innerHTML = `
+                    <div class="gig-title">${gig.name}</div>
+                    <div class="gig-details">
+                        <div><i class="fas fa-calendar"></i> ${formatDate(gigDate)}</div>
+                        <div><i class="fas fa-map-marker-alt"></i> ${gig.location}</div>
+                        <div><i class="fas fa-dollar-sign"></i> $${gig.payment}</div>
+                    </div>
+                `;
+                
+                gigsList.appendChild(gigElement);
+            });
+        }
+
+        // Render setlists list
+        function renderSetlists() {
+            setlistsList.innerHTML = '';
+            
+            setlists.forEach(setlist => {
+                const gig = gigs.find(g => g.id === setlist.gigId);
+                const setlistElement = document.createElement('div');
+                setlistElement.className = 'setlist-card';
+                setlistElement.onclick = () => showSetlistDetails(setlist.id);
+                
+                setlistElement.innerHTML = `
+                    <div class="gig-title">${setlist.name}</div>
+                    <div class="gig-details">
+                        <div><i class="fas fa-clock"></i> ${setlist.duration} minutes</div>
+                        <div><i class="fas fa-music"></i> ${setlist.songs.length} songs</div>
+                        ${gig ? `<div><i class="fas fa-calendar"></i> For: ${gig.name}</div>` : ''}
+                    </div>
+                `;
+                
+                setlistsList.appendChild(setlistElement);
+            });
+        }
+
+        // Render payments list
+        function renderPayments(filter = 'all') {
+            paymentsList.innerHTML = '';
+            
+            let filteredPayments = payments;
+            
+            if (filter === 'paid') {
+                filteredPayments = payments.filter(payment => payment.status === 'paid');
+            } else if (filter === 'pending') {
+                filteredPayments = payments.filter(payment => payment.status === 'pending');
+            }
+            
+            filteredPayments.forEach(payment => {
+                const gig = gigs.find(g => g.id === payment.gigId);
+                const paymentDate = new Date(payment.date);
+                const paymentElement = document.createElement('div');
+                paymentElement.className = 'payment-card';
+                
+                paymentElement.innerHTML = `
+                    <div class="gig-title">${gig ? gig.name : 'Unknown Gig'}</div>
+                    <div class="gig-details">
+                        <div><i class="fas fa-calendar"></i> ${formatDate(paymentDate)}</div>
+                        <div><i class="fas fa-dollar-sign"></i> Amount: $${payment.amount}</div>
+                    </div>
+                    <div class="payment-status ${payment.status}">${payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}</div>
+                `;
+                
+                paymentsList.appendChild(paymentElement);
+            });
+        }
+
+        // Populate gig dropdown for setlist association
+        function populateGigDropdown() {
+            setlistGigSelect.innerHTML = '<option value="">Select a gig</option>';
+            gigs.forEach(gig => {
+                if (gig.status === 'upcoming') {
+                    const option = document.createElement('option');
+                    option.value = gig.id;
+                    option.textContent = gig.name;
+                    setlistGigSelect.appendChild(option);
+                }
+            });
+        }
+
+        // Show gig details
+        function showGigDetails(gigId) {
+            const gig = gigs.find(g => g.id === gigId);
+            if (!gig) return;
+            
+            document.getElementById('gigModalTitle').textContent = gig.name;
+            document.getElementById('gigName').value = gig.name;
+            document.getElementById('gigDate').value = gig.date.replace(' ', 'T');
+            document.getElementById('gigLocation').value = gig.location;
+            document.getElementById('gigPayment').value = gig.payment;
+            document.getElementById('gigNotes').value = gig.notes;
+            
+            // For demo, we'll just show the modal
+            showModal('gigModal');
+        }
+
+        // Show setlist details
+        function showSetlistDetails(setlistId) {
+            const setlist = setlists.find(s => s.id === setlistId);
+            if (!setlist) return;
+            
+            document.getElementById('setlistModalTitle').textContent = setlist.name;
+            document.getElementById('setlistName').value = setlist.name;
+            document.getElementById('setlistDuration').value = setlist.duration;
+            document.getElementById('setlistGig').value = setlist.gigId || '';
+            
+            // For demo, we'll just show the modal
+            showModal('setlistModal');
+        }
+
+        // Show modal
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        // Close modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Show add gig modal
+        function showAddGigModal() {
+            document.getElementById('gigModalTitle').textContent = 'Add New Gig';
+            document.getElementById('gigName').value = '';
+            document.getElementById('gigDate').value = '';
+            document.getElementById('gigLocation').value = '';
+            document.getElementById('gigPayment').value = '';
+            document.getElementById('gigNotes').value = '';
+            showModal('gigModal');
+        }
+
+        // Show add setlist modal
+        function showAddSetlistModal() {
+            document.getElementById('setlistModalTitle').textContent = 'Create Setlist';
+            document.getElementById('setlistName').value = '';
+            document.getElementById('setlistDuration').value = '';
+            document.getElementById('setlistGig').value = '';
+            showModal('setlistModal');
+        }
+
+        // Save gig
+        function saveGig() {
+            // In a real app, this would save to a database
+            showNotification('Gig saved successfully!');
+            closeModal('gigModal');
+        }
+
+        // Save setlist
+        function saveSetlist() {
+            // In a real app, this would save to a database
+            showNotification('Setlist saved successfully!');
+            closeModal('setlistModal');
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Format date for display
+        function formatDate(date) {
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+
+        // Filter gigs
+        function filterGigs(filter) {
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderGigs(filter);
+        }
+
+        // Filter payments
+        function filterPayments(filter) {
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderPayments(filter);
+        }
+
+        // Search gigs
+        function searchGigs() {
+            const searchTerm = document.getElementById('gigSearch').value.toLowerCase();
+            // For demo purposes, we'll just show a notification
+            showNotification(`Searching for: ${searchTerm}`);
+        }
+
+        // Search setlists
+        function searchSetlists() {
+            const searchTerm = document.getElementById('setlistSearch').value.toLowerCase();
+            // For demo purposes, we'll just show a notification
+            showNotification(`Searching for: ${searchTerm}`);
+        }
+
+        // Show setlist modal from dashboard
+        function showSetlistModal() {
+            document.getElementById('setlistModalTitle').textContent = 'Summer Festival Setlist';
+            document.getElementById('setlistName').value = 'Summer Festival Setlist';
+            document.getElementById('setlistDuration').value = 90;
+            document.getElementById('setlistGig').value = 1;
+            showModal('setlistModal');
+        }
+
+        // Show generate invoice modal
+        function showGenerateInvoiceModal() {
+            showNotification('Invoice generation feature would open here');
+        }
+
+        // Show financial reports
+        function showFinancialReports() {
+            showNotification('Financial reports feature would open here');
+        }
+
+        // Show quick add menu
+        function showQuickAddMenu() {
+            showNotification('Quick add menu would appear here');
+        }
+
+        // Show contracts page (placeholder)
+        function showContractsPage() {
+            showNotification('Contracts page would open here');
+        }
+
+        // Show profile page (placeholder)
+        function showProfilePage() {
+            showNotification('Profile page would open here');
+        }
+
+        // Initialize the app when the page loads
+        window.onload = initApp;
     </script>
 </body>
 </html>
